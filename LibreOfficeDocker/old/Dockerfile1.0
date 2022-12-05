@@ -1,0 +1,16 @@
+FROM node:latest
+
+WORKDIR /tmp
+RUN wget https://downloadarchive.documentfoundation.org/libreoffice/old/7.0.4.2/deb/x86_64/LibreOffice_7.0.4.2_Linux_x86-64_deb.tar.gz
+RUN apt update \
+  && apt install -y libxinerama1 libfontconfig1 libdbus-glib-1-2 libcairo2 libcups2 libglu1-mesa libsm6 \
+  && tar -zxvf LibreOffice_7.0.4.2_Linux_x86-64_deb.tar.gz
+WORKDIR LibreOffice_7.0.4.2_Linux_x86-64_deb/DEBS
+
+RUN dpkg -i *.deb
+
+RUN apt install -y cabextract xfonts-utils
+RUN wget http://ftp.uk.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8_all.deb
+RUN dpkg -i ttf-mscorefonts-installer_3.8_all.deb
+#RUN apt install ttf-mscorefonts-installer
+RUN apt install fonts-wqy-zenhei
